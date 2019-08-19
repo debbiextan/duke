@@ -49,11 +49,4 @@ public class Duke {
             }
         }
     }
-
-    public String UpdateDone(String icon){
-        if (icon.equals("✗")) {
-            icon = "✓";
-        }
-        return icon;
-    }
 }
