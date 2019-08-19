@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -11,7 +12,9 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n\tWhat can I do for you?");
 
         Scanner sc = new Scanner(System.in);
+        String[] list = new String[100];
         String input;
+        int n = 0; // list size
 
         while (true) {
             input = sc.nextLine();
@@ -19,7 +22,18 @@ public class Duke {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
-            System.out.println(input);
+            else if (input.equals("list")) {
+                // print numbered list
+                for (int i=0; i<n; i++) {
+                    int label = i+1;
+                    System.out.println(label + ". " + list[i]);
+                }
+            }
+            else {
+                list[n] = input;
+                n++;
+                System.out.println("added: " + list[n - 1]);
+            }
         }
     }
 }
