@@ -12,7 +12,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke\n\tWhat can I do for you?");
 
         Scanner sc = new Scanner(System.in);
-        String[][] list = new String[2][100]; // symbol, list
+        Task[] list = new Task[100];
         String input;
         int n = 0; // list size
 
@@ -21,9 +21,9 @@ public class Duke {
             String[] DoneCheck = input.split("\\s+");
             if (DoneCheck[0].equals("done")) {
                 int num = Integer.parseInt(DoneCheck[1]) - 1;
-                list[0][num] = "✓";
+                list[num].markAsDone();
                 System.out.println("Nice! I've marked this task as done: ");
-                System.out.println("[✓] " + list[1][num]);
+                System.out.println("[" + list[num].getStatusIcon() + "] " + list[num].description);
             }
             else {
 
@@ -36,14 +36,15 @@ public class Duke {
                     // print numbered list
                     for (int i = 0; i < n; i++) {
                         int label = i + 1;
-                        System.out.println(label + ". [" + list[0][i] + "]" + list[1][i]);
+                        System.out.println(label + ". [" + list[i].getStatusIcon() + "] " + list[i].description);
+                        //System.out.println(label + ". [" + list[0][i] + "]" + list[1][i]);
                     }
                 }
                 else {
-                    list[0][n] = "✗";
-                    list[1][n] = input;
+                    Task t = new Task(input);
+                    list[n] = t;
+                    System.out.println("added: " + list[n].description);
                     n++;
-                    System.out.println("added: " + list[1][n - 1]);
                 }
             }
         }
