@@ -11,7 +11,11 @@ public class Task {
         return (isDone ? "✓" : "✗"); //return tick or X symbols
     }
 
-    public boolean markAsDone() {
-        return isDone = true;
+    public void setDone() {
+        isDone = true;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 }
