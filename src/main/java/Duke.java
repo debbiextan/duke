@@ -1,3 +1,4 @@
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -27,18 +28,33 @@ public class Duke {
                 break;
             }
             else if (input.equals("list")) {
-                // print list of Tasks
+                // print list of Tasks + types
                 duke.listTask();
             }
             else {
-                String[] DoneCheck = input.split("\\s+");
-                if (DoneCheck[0].equals("done")) {
-                    int num = Integer.parseInt(DoneCheck[1]) - 1;
-                    duke.setTaskDone(num);
-                } else {
-                    // add new Task
-                    Task t = new Task(input);
-                    duke.addTask(t);
+                String[] KeywordCheck = input.split("/");
+                String[] instruction = KeywordCheck[0].split("\\s+");
+                if (KeywordCheck.length > 1) {
+                    String[] date = KeywordCheck[1].split("\\s+");
+                    if (instruction[0].equals("deadline") && date[0].equals("by")) {
+                        // add new Deadline
+                        duke.addDeadline(KeywordCheck[0], KeywordCheck[1]);
+                    } else if (instruction[0].equals("event") && date[0].equals("at")) {
+                        // add new Event
+                        duke.addEvent(KeywordCheck[0], KeywordCheck[1]);
+                    }
+                }
+                else {
+                    if (instruction[0].equals("done")) {
+                        int num = Integer.parseInt(instruction[1]) - 1;
+                        duke.setTaskDone(num);
+                    }
+                    else if (instruction[0].equals("todo")) {
+                        duke.addTask(input);
+                    }
+                    else {
+                        System.out.println("Invalid Input!");
+                    }
                 }
             }
         }
@@ -50,16 +66,38 @@ public class Duke {
         System.out.println("[" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
     }
 
-    private void addTask(Task t) {
+    private void addTask(String input) {
+        // process input into description
+        Task t = new Task(input.substring(5));
         list.add(t);
-        System.out.println("added: " + t.getDescription());
+        System.out.print("Got it. I've added this task: ");
+        System.out.println("[T][✗] " + t.getDescription());
+        System.out.println("Now you have " + list.size() + " tasks in the list.");
+    }
+
+    private void addDeadline(String instruction, String date) {
+        // process input into description and date
+        Deadline d = new Deadline(instruction.substring(9), date.substring(3));
+        list.add(d);
+        System.out.print("Got it. I've added this task: ");
+        System.out.println("[D][" + d.getStatusIcon() + "] " + d.getDescription());
+        System.out.println("Now you have " + list.size() + " tasks in the list.");
+    }
+
+    private void addEvent(String instruction, String date) {
+        // process input into description and date
+        Event e = new Event(instruction.substring(6), date.substring(3));
+        list.add(e);
+        System.out.print("Got it. I've added this task: ");
+        System.out.println("[E][" + e.getStatusIcon() + "] " + e.getDescription());
+        System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
     private void listTask() {
         System.out.println("Here are the tasks in your list: ");
         for (int i = 0; i < list.size(); i++) {
             int label = i + 1;
-            System.out.println(label + ". [" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
+            System.out.println(label + ". [" + list.get(i).getType() + "][" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
         }
     }
 
