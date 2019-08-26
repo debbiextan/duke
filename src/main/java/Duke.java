@@ -18,55 +18,80 @@ public class Duke {
         Scanner sc = new Scanner(System.in);
         String input;
 
-        while (true) {
+        while (sc.hasNextLine()) {
             input = sc.nextLine();
-            if (input.isEmpty()) {
-                System.out.println("Please do not leave blanks!");
-            }
-            else if (input.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                break;
-            }
-            else if (input.equals("list")) {
-                // print list of Tasks + types
-                duke.listTask();
-            }
-            else {
-                String[] KeywordCheck = input.split("/");
-                String[] instruction = KeywordCheck[0].split("\\s+");
-                if (KeywordCheck.length > 1) {
-                    String[] date = KeywordCheck[1].split("\\s+");
-                    if (instruction[0].equals("deadline") && date[0].equals("by")) {
-                        // add new Deadline
-                        duke.addDeadline(KeywordCheck[0], KeywordCheck[1]);
-                    } else if (instruction[0].equals("event") && date[0].equals("at")) {
-                        // add new Event
-                        duke.addEvent(KeywordCheck[0], KeywordCheck[1]);
+            String[] KeywordCheck = input.split("/");
+            String[] instruction = KeywordCheck[0].split("\\s+");
+
+            switch (instruction[0]) {
+                case "bye":
+                    System.out.println("Bye. Hope to see you again soon!");
+                    System.exit(0);
+
+                case "list":
+                    // print list of Tasks + types
+                    duke.listTask();
+                    break;
+
+                case "done":
+                    try {
+                        //int num = Integer.parseInt(instruction[1]) - 1;
+                        duke.setTaskDone(input);
                     }
-                }
-                else {
-                    if (instruction[0].equals("done")) {
-                        int num = Integer.parseInt(instruction[1]) - 1;
-                        duke.setTaskDone(num);
+                    catch (DukeExceptions errMsg) {
+                        System.out.println(errMsg.toString());
                     }
-                    else if (instruction[0].equals("todo")) {
+                    break;
+
+                case "todo":
+                    try {
                         duke.addTask(input);
+                    } catch (DukeExceptions errMsg) {
+                        System.out.println(errMsg.toString());
                     }
-                    else {
-                        System.out.println("Invalid Input!");
+                    break;
+
+                case "deadline":
+                    try {
+                        duke.addDeadline(input);
+                    } catch (DukeExceptions errMsg) {
+                        System.out.println(errMsg.toString());
                     }
-                }
+                    break;
+
+                case "event":
+                    try {
+                        duke.addEvent(input);
+                    } catch (DukeExceptions errMsg) {
+                        System.out.println(errMsg.toString());
+                    }
+                    break;
+                default:
+                    System.out.println("I'm sorry, but I don't know what that means :-(");
             }
         }
     }
 
-    private void setTaskDone(int i) {
+    public void setTaskDone(String input) throws DukeExceptions {
+        String[] KeywordCheck = input.split("\\s+");
+        int i = Integer.parseInt(KeywordCheck[1]);
+        i -= 1;
+        if (input.equals("done")){
+            throw new DukeExceptions("Please indicate Task Number you want to have marked Done.");
+        }
+        else if (i > list.size() || i < 0) {
+            throw new DukeExceptions("This Task Number does not exist.");
+        }
         list.get(i).setDone();
         System.out.println("Nice! I've marked this task as done: ");
-        System.out.println("[" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
+        printAccordingTaskType(i);
+        //System.out.println("[" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
     }
 
-    private void addTask(String input) {
+    public void addTask(String input) throws DukeExceptions {
+        if (input.equals("todo")) {
+            throw new DukeExceptions("The description of a todo cannot be empty.");
+        }
         // process input into description
         Task t = new Task(input.substring(5));
         list.add(t);
@@ -75,29 +100,57 @@ public class Duke {
         System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
-    private void addDeadline(String instruction, String date) {
+    public void addDeadline(String input) throws DukeExceptions {
+        if (input.equals("deadline")) {
+            throw new DukeExceptions("The description of a deadline cannot be empty.");
+        }
+        else if (!input.contains("/by")) {
+            throw new DukeExceptions("The deadline must be specified for a Deadline Task.");
+        }
         // process input into description and date
-        Deadline d = new Deadline(instruction.substring(9), date.substring(3));
+        String[] KeywordCheck = input.split("/");
+        Deadline d = new Deadline(KeywordCheck[0].substring(9), KeywordCheck[1].substring(3));
         list.add(d);
         System.out.print("Got it. I've added this task: ");
-        System.out.println("[D][" + d.getStatusIcon() + "] " + d.getDescription());
+        System.out.println("[D][" + d.getStatusIcon() + "] " + d.getDescription() + "(by: " + d.getDate() + ")");
         System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
-    private void addEvent(String instruction, String date) {
+    public void addEvent(String input) throws DukeExceptions {
+        if (input.equals("event")) {
+            throw new DukeExceptions("The description of a event cannot be empty.");
+        }
+        else if (!input.contains("/at")) {
+            throw new DukeExceptions("The date/time must be specified for an Event Task.");
+        }
         // process input into description and date
-        Event e = new Event(instruction.substring(6), date.substring(3));
+        String[] KeywordCheck = input.split("/");
+        Event e = new Event(KeywordCheck[0].substring(6), KeywordCheck[1].substring(3));
         list.add(e);
         System.out.print("Got it. I've added this task: ");
-        System.out.println("[E][" + e.getStatusIcon() + "] " + e.getDescription());
+        System.out.println("[E][" + e.getStatusIcon() + "] " + e.getDescription() + "(at: " + e.getDate() + ")");
         System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
-    private void listTask() {
+    public void listTask() {
         System.out.println("Here are the tasks in your list: ");
         for (int i = 0; i < list.size(); i++) {
-            int label = i + 1;
+            printAccordingTaskType(i);
+        }
+    }
+
+    public void printAccordingTaskType(int i) {
+        int label = i+1;
+        if (list.get(i).getType().equals("T")) {
             System.out.println(label + ". [" + list.get(i).getType() + "][" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
+        }
+        else if (list.get(i).getType().equals("D")) {
+            Deadline d = (Deadline) list.get(i);
+            System.out.println(label + ". [" + d.getType() + "][" + d.getStatusIcon() + "] " + d.getDescription() + "(by: " + d.getDate() + ")");
+        }
+        else if (list.get(i).getType().equals("E")) {
+            Event e = (Event) list.get(i);
+            System.out.println(label + ". [" + e.getType() + "][" + e.getStatusIcon() + "] " + e.getDescription() + "(at: " + e.getDate() + ")");
         }
     }
 

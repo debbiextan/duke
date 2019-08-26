@@ -8,7 +8,7 @@ public class Deadline extends Task {
     public Deadline(String description, String date) {
         super(description);
         this.isDeadline = true;
-        this.date = getDate();
+        this.date = date;
         this.type = "D";
     }
 
