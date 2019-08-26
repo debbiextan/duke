@@ -16,6 +16,10 @@ public class Event extends Task {
         return this.date;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String getType() {
         return "E";

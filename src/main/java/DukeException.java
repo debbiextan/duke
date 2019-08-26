@@ -1,7 +1,7 @@
-public class DukeExceptions extends Exception {
+public class DukeException extends Exception {
     private String errMsg;
 
-    public DukeExceptions(String errMsg) {
+    public DukeException(String errMsg) {
         super(errMsg);
         this.errMsg = errMsg;
     }

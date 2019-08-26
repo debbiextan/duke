@@ -14,8 +14,8 @@ public class Task {
 
     public String getType() { return type = "T"; }
 
-    public void setDone() {
-        isDone = true;
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
     public String getDescription() {
