@@ -1,24 +1,24 @@
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Deadline extends Task {
-    protected String date;
+    //protected String date;
+    protected Date date;
     protected boolean isDeadline;
 
-    public Deadline(String description, String date) {
+    public Deadline(String description, Date date) {
         super(description);
         this.isDeadline = true;
         this.date = date;
         this.type = "D";
     }
 
-    public String getDate() {
+    public Date getDate() {
         return this.date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+//    public void setDate(String date) {
+//        this.date = date;
+//    }
 
     @Override
     public String getType() {

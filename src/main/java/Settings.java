@@ -1,5 +1,7 @@
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Settings {
 
@@ -12,6 +14,7 @@ public class Settings {
     public void save(ArrayList<Task> tasks) {
         File file = null;
         PrintWriter writer = null;
+        Duke duke = new Duke();
         try {
             file = new File(FILEPATH);
             if (file.createNewFile()) {
@@ -19,18 +22,18 @@ public class Settings {
             }
             writer = new PrintWriter(file);
             for (Task t : tasks) {
-                System.out.println(t.isDone);
-            }
-            for (Task t : tasks) {
                 String type = t.getType();
-                if (type.equals("T")) {
-                    writer.printf("%s,%s,%s\n", t.type, t.isDone, t.description);
-                } else if (type.equals("D")) {
+                 if (t instanceof Deadline) {
                     Deadline d = (Deadline) t;
-                    writer.printf("%s,%s,%s,%s\n", d.type, d.isDone, d.description, d.date);
-                } else if (type.equals("E")) {
+                    String date = duke.formatDateToString(d.date);
+                    writer.printf("%s,%s,%s,%s\n", d.type, d.isDone, d.description, date);
+                } else if (t instanceof Event) {
                     Event e = (Event) t;
-                    writer.printf("%s,%s,%s,%s\n", e.type, e.isDone, e.description, e.date);
+                    String date = duke.formatDateToString(e.date);
+                    writer.printf("%s,%s,%s,%s\n", e.type, e.isDone, e.description, date);
+                }
+                else {
+                    writer.printf("%s,%s,%s\n", t.type, t.isDone, t.description);
                 }
             }
             writer.close();
@@ -48,6 +51,7 @@ public class Settings {
             File file = new File(FILEPATH);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
+            Duke duke = new Duke();
 
             while ((line = br.readLine()) != null) {
                 String[] list = line.split(",");
@@ -65,13 +69,15 @@ public class Settings {
                     }
                     else if (list[0].equals("D")) {
                         // Deadline Task
-                        Deadline d = new Deadline(list[2], list[3]);
+                        Date date = duke.formatStringToDate(list[3]);
+                        Deadline d = new Deadline(list[2], date);
                         d.setDone(done);
                         tasks.add(d);
                     }
                     else if (list[0].equals("E")) {
                         // Event Task
-                        Event e = new Event(list[2], list[3]);
+                        Date date = duke.formatStringToDate(list[3]);
+                        Event e = new Event(list[2], date);
                         e.setDone(done);
                         tasks.add(e);
                     }
