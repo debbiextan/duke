@@ -73,6 +73,23 @@ public class Duke {
         list = settings.load();
     }
 
+    public void deleteTask(String input) throws DukeException {
+        String[] KeywordCheck = input.split("\\s+");
+        int i = Integer.parseInt(KeywordCheck[1]);
+        i -= 1; // reset to start at 0
+        if (input.equals("delete")){
+            throw new DukeException("Please indicate Task Number you want to delete.");
+        }
+        else if (i > list.size() || i < 0) {
+            throw new DukeException("This Task Number does not exist.");
+        }
+        System.out.println("Noted. I've removed this task: ");
+        printAccordingTaskType(i);
+        System.out.println("Now you have " + list.size() + " tasks in the list.");
+        list.remove(i);
+        settings.save(list);
+    }
+
     public void setTaskDone(String input) throws DukeException {
         String[] KeywordCheck = input.split("\\s+");
         int i = Integer.parseInt(KeywordCheck[1]);

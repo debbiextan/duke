@@ -24,16 +24,13 @@ public class Main {
             switch (instruction[0]) {
                 case "bye":
                     System.out.println("Bye. Hope to see you again soon!");
-                    System.exit(0);
-
+                    System.exit(0); // ends program
                 case "list":
-                    // print list of Tasks + types
                     duke.listTask();
                     break;
 
                 case "done":
                     try {
-                        //int num = Integer.parseInt(instruction[1]) - 1;
                         duke.setTaskDone(input);
                     }
                     catch (DukeException errMsg) {
@@ -61,6 +58,14 @@ public class Main {
                     try {
                         duke.addEvent(input);
                     } catch (DukeException errMsg) {
+                        System.out.println(errMsg.toString());
+                    }
+                    break;
+                case "delete":
+                    try {
+                        duke.deleteTask(input);
+                    }
+                    catch (DukeException errMsg) {
                         System.out.println(errMsg.toString());
                     }
                     break;
