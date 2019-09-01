@@ -69,6 +69,15 @@ public class Main {
                         System.out.println(errMsg.toString());
                     }
                     break;
+                case "find":
+                    try {
+                        String keyword = input.substring(5);
+                        duke.printTasksByKeyword(keyword);
+                    }
+                    catch (DukeException errMsg) {
+                        System.out.println(errMsg.toString());
+                    }
+                    break;
                 default:
                     System.out.println("I'm sorry, but I don't know what that means :-(");
             }

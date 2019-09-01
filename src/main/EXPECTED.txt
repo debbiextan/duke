@@ -38,4 +38,7 @@ Here are the tasks in your list:
 1. [D][✘] return book (by: 2nd of December 2019, 6PM)
 2. [E][✘] concert (at: 1st of September 2019, 4PM)
 3. [T][✘] feed alpaca
+☹ OOPS!!! No results with the keyword 'worms' was found.
+Here are the matching tasks in your list: 
+3. [T][✘] feed alpaca
 Bye. Hope to see you again soon!

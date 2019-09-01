@@ -11,4 +11,6 @@ todo feed alpaca
 list
 delete 1
 list
+find worms
+find alpaca
 bye

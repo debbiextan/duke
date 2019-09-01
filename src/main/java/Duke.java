@@ -9,6 +9,22 @@ public class Duke {
     protected Settings settings = new Settings();
     private ArrayList<Task> list = new ArrayList<>();
 
+    public void printTasksByKeyword(String keyword) throws DukeException{
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task t : list) {
+            if (t.description.contains(keyword)) {
+                tasks.add(t);
+            }
+        }
+        if (tasks.isEmpty()) {
+            throw new DukeException("No results with the keyword '" + keyword + "' was found.");
+        }
+        System.out.println("Here are the matching tasks in your list: ");
+        for (Task t: tasks){
+            printAccordingTaskType(list.indexOf(t));
+        }
+    }
+
     public Date formatStringToDate(String date) {
         Date formatted;
         try {
