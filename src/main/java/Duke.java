@@ -1,14 +1,9 @@
-import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
-import sun.jvm.hotspot.utilities.ObjectReader;
-
-import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Duke {
     protected Settings settings = new Settings();
@@ -115,7 +110,7 @@ public class Duke {
         list.add(t);
         settings.save(list);
         System.out.print("Got it. I've added this task: ");
-        System.out.println("[T][✗] " + t.getDescription());
+        System.out.println("[T][\u2718] " + t.getDescription());
         System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
@@ -129,7 +124,7 @@ public class Duke {
         String[] KeywordCheck = input.split("/");
         String dateString = String.join("/", Arrays.copyOfRange(KeywordCheck, 1, KeywordCheck.length));
         Date date = formatStringToDate(dateString.substring(3));
-        System.out.println(date);
+        //System.out.println(date);
         Deadline d = new Deadline(KeywordCheck[0].substring(9), date);
         list.add(d);
         settings.save(list);
@@ -146,7 +141,8 @@ public class Duke {
         }
         // process input into description and date
         String[] KeywordCheck = input.split("/");
-        Date date = formatStringToDate(KeywordCheck[1].substring(3));
+        String dateString = String.join("/", Arrays.copyOfRange(KeywordCheck, 1, KeywordCheck.length));
+        Date date = formatStringToDate(dateString.substring(3));
         Event e = new Event(KeywordCheck[0].substring(6), date);
         list.add(e);
         settings.save(list);
