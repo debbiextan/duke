@@ -33,11 +33,12 @@ Here are the tasks in your list:
 4. [T][✘] feed alpaca
 Noted. I've removed this task: 
 1. [T][✓] read book
-Now you have 4 tasks in the list.
+Now you have 3 tasks in the list.
 Here are the tasks in your list: 
 1. [D][✘] return book (by: 2nd of December 2019, 6PM)
 2. [E][✘] concert (at: 1st of September 2019, 4PM)
 3. [T][✘] feed alpaca
+Here are the matching tasks in your list: 
 ☹ OOPS!!! No results with the keyword 'worms' was found.
 Here are the matching tasks in your list: 
 3. [T][✘] feed alpaca

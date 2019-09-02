@@ -1,11 +1,12 @@
+package models;
+
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private String description;
+    private boolean isDone;
     protected String type;
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
     }
 
     public String getStatusIcon() {
@@ -13,6 +14,10 @@ public class Task {
     }
 
     public String getType() { return type = "T"; }
+
+    public boolean getDone(){
+        return isDone;
+    }
 
     public void setDone(boolean done) {
         isDone = done;

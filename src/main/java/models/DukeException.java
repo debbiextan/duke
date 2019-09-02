@@ -1,3 +1,5 @@
+package models;
+
 public class DukeException extends Exception {
     private String errMsg;
 

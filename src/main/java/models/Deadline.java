@@ -1,9 +1,11 @@
+package models;
+
 import java.util.Date;
 
 public class Deadline extends Task {
     //protected String date;
-    protected Date date;
-    protected boolean isDeadline;
+    private Date date;
+    private boolean isDeadline;
 
     public Deadline(String description, Date date) {
         super(description);

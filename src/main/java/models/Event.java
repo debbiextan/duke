@@ -1,11 +1,13 @@
+package models;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event extends Task {
     //protected String date;
-    protected Date date;
-    protected boolean isEvent;
+    private Date date;
+    private boolean isEvent;
 
     public Event(String description, Date date) {
         super(description);
