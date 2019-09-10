@@ -9,6 +9,11 @@ public class Event extends Task {
     private Date date;
     private boolean isEvent;
 
+    /**
+     * Event constructor
+     * @param description String variable of Event object containing description
+     * @param date Date variable of Event object containing date
+     */
     public Event(String description, Date date) {
         super(description);
         this.isEvent = true;
@@ -16,16 +21,25 @@ public class Event extends Task {
         this.type = "E";
     }
 
+    /**
+     * Get date of Event object
+     * @return Date containing date
+     */
     public Date getDate() {
         return this.date;
+    }
+
+    /**
+     * Get type of Event object
+     * @return String containing type "E"
+     */
+    @Override
+    public String getType() {
+        return "E";
     }
 
 //    public void setDate(String date) {
 //        this.date = date;
 //    }
 
-    @Override
-    public String getType() {
-        return "E";
-    }
 }

@@ -10,15 +10,26 @@ public class Storage {
 
     final String FILEPATH = "./duke.csv";
 
+    /**
+     * Storage constructor
+     */
     public Storage() {
         // constructor
     }
 
+    /**
+     * Override for Storage constructor
+     * @param filePath if .csv load file exists
+     */
     public Storage(String filePath) {
         // constructor
         // FILEPATH = filePath;
     }
 
+    /**
+     * Saves a list of tasks taken in by user input into a .csv file
+     * @param tasks an ArrayList of tasks stating description, type and date (if relevant) of individual tasks
+     */
     public void save(ArrayList<Task> tasks) {
         File file = null;
         PrintWriter writer = null;
@@ -53,6 +64,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads previously saved .csv file of task list
+     * @return an ArrayList of tasks
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         try {

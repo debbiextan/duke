@@ -1,8 +1,5 @@
 import models.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,6 +11,12 @@ public class Duke {
     private Ui ui = new Ui();
     private TaskList taskList;
 
+
+    /**
+     * Determines type of task by keyword used
+     * @param keyword first word of input by user
+     * @throws DukeException if no further instruction is given after keyword
+     */
     public void printTasksByKeyword(String keyword) throws DukeException {
         ArrayList<Task> tasks = new ArrayList<>();
         for (Task t : taskList.getTasks()) {
@@ -29,6 +32,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Processes user input and deletes task indicated through task number
+     * @param input full instruction given by user
+     * @throws DukeException if task number is invalid or does not exist
+     */
     public void deleteTask(String input) throws DukeException {
         String[] KeywordCheck = input.split("\\s+");
         int i = Integer.parseInt(KeywordCheck[1]);
@@ -45,6 +53,11 @@ public class Duke {
         System.out.println("Now you have " + taskList.getTasks().size() + " tasks in the list.");
     }
 
+    /**
+     * Processes user input and marks Task as complete indicated through task number
+     * @param input full instruction given by user
+     * @throws DukeException if task number is invalid or does not exist
+     */
     public void setTaskDone(String input) throws DukeException {
         String[] KeywordCheck = input.split("\\s+");
         int i = Integer.parseInt(KeywordCheck[1]);
@@ -61,6 +74,11 @@ public class Duke {
         ui.printAccordingTaskType(i, taskList.getTasks().get(i));
     }
 
+    /**
+     * Processes input and adds a new Todo task
+     * @param input full instruction given by user
+     * @throws DukeException if task description is empty
+     */
     public void addTask(String input) throws DukeException {
         if (input.equals("todo")) {
             throw new DukeException("The description of a todo cannot be empty.");
@@ -74,6 +92,11 @@ public class Duke {
         System.out.println("Now you have " + taskList.getTasks().size() + " tasks in the list.");
     }
 
+    /**
+     * Processes input and adds a new deadline task with date
+     * @param input full instruction given by user
+     * @throws DukeException if task description is empty or date is not indicated
+     */
     public void addDeadline(String input) throws DukeException {
         if (input.equals("deadline")) {
             throw new DukeException("The description of a deadline cannot be empty.");
@@ -93,6 +116,11 @@ public class Duke {
         System.out.println("Now you have " + taskList.getTasks().size() + " tasks in the list.");
     }
 
+    /**
+     * Processes input and adds a new event task with date
+     * @param input full instruction given by user
+     * @throws DukeException if task description is empty or a date is not indicated
+     */
     public void addEvent(String input) throws DukeException {
         if (input.equals("event")) {
             throw new DukeException("The description of a event cannot be empty.");
@@ -111,6 +139,9 @@ public class Duke {
         System.out.println("Now you have " + taskList.getTasks().size() + " tasks in the list.");
     }
 
+    /**
+     * Decides what instruction to run based on user input read by Scanner
+     */
     public void run(){
         ui.greet();
 
@@ -189,6 +220,9 @@ public class Duke {
         sc.close();
     }
 
+    /**
+     * Duke constructor
+     */
     public Duke() {
         // constructor
         ui = new Ui();
@@ -196,6 +230,10 @@ public class Duke {
         taskList = new TaskList(storage.load());
     }
 
+    /**
+     * Override method for Duke constructor
+     * @param filePath if .csv load file is exists
+     */
     public Duke(String filePath) {
         // constructor
         ui = new Ui();
