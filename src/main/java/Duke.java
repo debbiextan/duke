@@ -6,18 +6,17 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Duke {
-    protected Storage storage = new Storage();
+    private Storage storage;
     //private ArrayList<Task> list = new ArrayList<>();
-    private Ui ui = new Ui();
+    private Ui ui;
     private TaskList taskList;
-
 
     /**
      * Determines type of task by keyword used
      * @param keyword first word of input by user
      * @throws DukeException if no further instruction is given after keyword
      */
-    public void printTasksByKeyword(String keyword) throws DukeException {
+    private void printTasksByKeyword(String keyword) throws DukeException {
         ArrayList<Task> tasks = new ArrayList<>();
         for (Task t : taskList.getTasks()) {
             if (t.getDescription().contains(keyword)) {
