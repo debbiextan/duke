@@ -1,8 +1,9 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.Test;
+
 import models.DukeException;
-import models.Task;
 import models.TaskList;
-import org.junit.jupiter.api.Test;
 
 class DukeTest {
     private String instruction = "";
@@ -10,7 +11,7 @@ class DukeTest {
     private TaskList list;
 
     @Test
-    void deleteTask() throws DukeException {
+    public void deleteTask() throws DukeException {
         instruction = "delete 1";
         String original = list.getTasks().get(0).getDescription();
         duke.deleteTask(instruction);
@@ -20,14 +21,14 @@ class DukeTest {
     }
 
     @Test
-    void setTaskDone() throws DukeException {
+    public void setTaskDone() throws DukeException {
         instruction = "done 1";
         duke.setTaskDone(instruction);
         assertTrue(list.getTasks().get(0).getDone());
     }
 
     @Test
-    void addTask() throws DukeException {
+    public void addTask() throws DukeException {
         instruction = "todo read book";
         duke.addTask(instruction);
         int i = list.getTasks().size()-1;
@@ -35,7 +36,7 @@ class DukeTest {
     }
 
     @Test
-    void addDeadline() throws DukeException {
+    public void addDeadline() throws DukeException {
         instruction = "deadline return book /by 2/12/2019 1800";
         duke.addDeadline(instruction);
         int i = list.getTasks().size()-1;
@@ -43,7 +44,7 @@ class DukeTest {
     }
 
     @Test
-    void addEvent() throws DukeException {
+    public void addEvent() throws DukeException {
         instruction = "event concert /at 1/09/2019 1600";
         duke.addEvent(instruction);
         int i = list.getTasks().size()-1;
