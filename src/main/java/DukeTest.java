@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.Test;
 
 import models.DukeException;
